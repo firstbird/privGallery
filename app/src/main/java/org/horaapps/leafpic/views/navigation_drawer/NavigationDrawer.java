@@ -9,6 +9,7 @@ import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
@@ -148,6 +149,7 @@ public class NavigationDrawer extends ScrollView implements Themed {
         setupListeners();
 
         selectedEntry = albumsEntry;
+        Log.v("mzl", "size: " + navigationEntries.length);
     }
 
     private void setupView() {

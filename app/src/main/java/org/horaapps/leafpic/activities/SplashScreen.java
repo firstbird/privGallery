@@ -90,6 +90,7 @@ public class SplashScreen extends SharedMediaActivity {
         } else
             PermissionUtils.requestPermissions(this, EXTERNAL_STORAGE_PERMISSIONS, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
 
+        Log.v("mzl", this.getClass().getName() + " oncreate, pickMode: " + pickMode);
         //startLookingForMedia();
     }
 

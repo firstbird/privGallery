@@ -109,11 +109,11 @@
                 app:itemIcon="@string/icon_settings"
                 app:itemText="@string/settings" />
 
+<!--            android:visibility="gone"-->
             <org.horaapps.leafpic.views.navigation_drawer.NavigationEntry
                 android:id="@+id/navigation_item_affix"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 app:itemIcon="@string/icon_affix"
                 app:itemText="@string/affix" />
 

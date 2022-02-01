@@ -22,6 +22,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -116,12 +117,14 @@ public class MainActivity extends SharedMediaActivity implements
             initAlbumsFragment();
             setContentFragment();
 
+            Log.v("mzl", "main activity oncreate 1, pickMode: " + pickMode);
             return;
         }
 
         /* We have some instance state */
         restoreState(savedInstanceState);
 
+        Log.v("mzl", "main activity oncreate 2");
         switch (fragmentMode) {
 
             case FragmentMode.MODE_MEDIA:
@@ -198,6 +201,7 @@ public class MainActivity extends SharedMediaActivity implements
                 .commit();
 
         setupUiForTimeline();
+        Log.v("mzl", "main activity displayTimeline");
     }
 
     @Override
@@ -245,12 +249,15 @@ public class MainActivity extends SharedMediaActivity implements
     @Override
     public void changedEditMode(boolean editMode, int selected, int total, @Nullable View.OnClickListener listener, @Nullable String title) {
         if (editMode) {
+            Log.v("mzl", "changeEditMode, editMode true");
             updateToolbar(
                     getString(R.string.toolbar_selection_count, selected, total),
                     GoogleMaterial.Icon.gmd_check, listener);
         } else if (inAlbumMode()) {
+            Log.v("mzl", "changeEditMode, inAlbumMode");
             showDefaultToolbar();
         } else {
+            Log.v("mzl", "changeEditMode, mode: " + fragmentMode);
             updateToolbar(title, GoogleMaterial.Icon.gmd_arrow_back, v -> goBackToAlbums());
         }
     }

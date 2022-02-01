@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 repositories {
     maven { url 'https://maven.aliyun.com/repository/google/' }
@@ -29,20 +30,12 @@ android {
         multiDexEnabled true
     }
 
-    lintOptions {
-        disable 'MissingTranslation'
-        disable 'ExtraTranslation'
-        abortOnError false
-    }
 
     dexOptions {
         jumboMode = true
     }
 
     // This is handled for you by the 2.0+ Gradle Plugin
-    aaptOptions {
-        additionalParameters "--no-version-vectors"
-    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -78,6 +71,13 @@ android {
             dimension "default"
         }
     }
+    androidResources {
+        additionalParameters '--no-version-vectors'
+    }
+    lint {
+        abortOnError false
+        disable 'MissingTranslation', 'ExtraTranslation'
+    }
 }
 
 dependencies {
@@ -104,12 +104,12 @@ dependencies {
 
     // utils
     implementation 'com.github.bumptech.glide:glide:4.8.0' //surumu 4.7.1 den 4.8.0 ya yukseltildi
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'  //surumu 4.7.1 den 4.8.0 ya yukseltildi
+    kapt 'com.github.bumptech.glide:compiler:4.8.0'  //surumu 4.7.1 den 4.8.0 ya yukseltildi
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.12'
     implementation 'com.github.Commit451:bypasses:1.0.4'
 
     implementation 'com.jakewharton:butterknife:8.8.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    kapt 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'com.drewnoakes:metadata-extractor:2.11.0'
     implementation "com.orhanobut:hawk:2.0.1"
     implementation 'com.commonsware.cwac:provider:0.5.3'

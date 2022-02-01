@@ -1,0 +1,16 @@
+@startuml
+abstract class org.horaapps.leafpic.activities.base.SharedMediaActivity {
+- int REQUEST_CODE_SD_CARD_PERMISSIONS
++ void requestSdCardPermissions()
++ void onActivityResult(int,int,Intent)
+}
+abstract class org.horaapps.leafpic.activities.base.BaseActivity {
+~ CompositeDisposable disposables
++ void disposeLater(Disposable)
+# void onDestroy()
+}
+
+
+org.horaapps.leafpic.activities.base.BaseActivity <|-- org.horaapps.leafpic.activities.base.SharedMediaActivity
+org.horaapps.liz.ThemedActivity <|-- org.horaapps.leafpic.activities.base.BaseActivity
+@enduml
