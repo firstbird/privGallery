@@ -66,3 +66,17 @@ fun deleteMedia(context: Context, mediaList: List<Media>, fragmentManager: Fragm
 
     bottomSheet.showNow(fragmentManager, null)
 }
+
+fun deletePrivacy(context: Context, mediaList: List<Media>, fragmentManager: FragmentManager, deleteListener: ProgressBottomSheet.Listener<Media>) {
+    val sources = ArrayList<io.reactivex.Observable<Media>>(mediaList.size)
+    for (media in mediaList)
+        sources.add(MediaHelper.deleteMediaPrivacy(context.applicationContext, media))
+
+    val bottomSheet = ProgressBottomSheet.Builder<Media>(R.string.delete_bottom_sheet_title)
+            .autoDismiss(false)
+            .sources(sources)
+            .listener(deleteListener)
+            .build()
+
+    bottomSheet.showNow(fragmentManager, null)
+}

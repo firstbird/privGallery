@@ -1,0 +1,371 @@
+@startuml
+abstract class org.horaapps.leafpic.activities.base.SharedMediaActivity {
+- int REQUEST_CODE_SD_CARD_PERMISSIONS
++ void requestSdCardPermissions()
++ void onActivityResult(int,int,Intent)
+}
+abstract class org.horaapps.leafpic.activities.base.BaseActivity {
+~ CompositeDisposable disposables
++ void disposeLater(Disposable)
+# void onDestroy()
+}
+class org.horaapps.leafpic.activities.BlackWhiteListActivity {
++ {static} String EXTRA_TYPE
+- RecyclerView mRecyclerView
+- ItemsAdapter adapter
+- Toolbar toolbar
+- ArrayList<String> folders
+- boolean typeExcluded
++ void onCreate(Bundle)
+- void loadFolders(int)
+- boolean isExcludedMode()
++ boolean onCreateOptionsMenu(Menu)
++ boolean onPrepareOptionsMenu(Menu)
+- void addFolder(File)
+- void checkNothing()
+- boolean showDescriptionCard()
+- boolean showNothingToShowPlaceholder()
+- boolean showEasterEgg()
++ boolean onOptionsItemSelected(MenuItem)
+- void initUi()
++ void updateUiElements()
+}
+class org.horaapps.leafpic.activities.BlackWhiteListActivity.ItemsAdapter {
+- View.OnClickListener listener
++ ItemsAdapter.ViewHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(ItemsAdapter.ViewHolder,int)
++ int getItemCount()
+}
+class org.horaapps.leafpic.activities.BlackWhiteListActivity.ItemsAdapter.ViewHolder {
+~ LinearLayout layout
+~ ThemedIcon imgFolder
+~ TextView name
+}
+class org.horaapps.leafpic.activities.SecurityActivity {
+- Toolbar toolbar
+- LinearLayout llroot
+- SwitchCompat swActiveSecurity
+- SwitchCompat swApplySecurityDelete
+- SwitchCompat swApplySecurityHidden
+- SwitchCompat swFingerPrint
+- LinearLayout llFingerprint
+- FingerprintHandler fingerprintHandler
++ void onCreate(Bundle)
+- void initUi()
+- void setPasswordDialog()
+- void toggleResetSecurity()
+- void toggleEnabledChild(boolean)
++ void updateUiElements()
+}
+class org.horaapps.leafpic.activities.SingleMediaActivity {
+- {static} String TAG
+- {static} int SLIDE_SHOW_INTERVAL
+- {static} String ISLOCKED_ARG
++ {static} String ACTION_OPEN_ALBUM
++ {static} String ACTION_OPEN_ALBUM_LAZY
+- {static} String ACTION_REVIEW
++ {static} String EXTRA_ARGS_ALBUM
++ {static} String EXTRA_ARGS_MEDIA
++ {static} String EXTRA_ARGS_POSITION
+~ HackyViewPager mViewPager
+~ RelativeLayout activityBackground
+~ Toolbar toolbar
+- boolean fullScreenMode
+- int position
+- Album album
+- ArrayList<Media> media
+- MediaPagerAdapter adapter
+- boolean isSlideShowOn
+- boolean useImageMenu
+~ Handler handler
+~ Runnable slideShowRunnable
++ {static} void startActivity(Context,Parcelable,Serializable,int)
++ void onCreate(Bundle)
+- void loadAlbum(Intent)
+- void loadAlbumsLazy(Intent)
+- void loadUri(Uri)
+- void initUi()
+- boolean isCurrentMediaImage()
++ void onViewTapped()
++ void updateUiElements()
+- void updatePageTitle(int)
++ void onLowMemory()
++ boolean onCreateOptionsMenu(Menu)
++ void onConfigurationChanged(Configuration)
++ boolean onPrepareOptionsMenu(Menu)
++ void onActivityResult(int,int,Intent)
+- void displayAlbums()
+- void deleteCurrentMedia()
+- void rotateImage(int)
++ boolean onOptionsItemSelected(MenuItem)
++ Media getCurrentMedia()
+- void updateBrightness(float)
+- UCrop.Options getUcropOptions()
++ void setNavBarColor()
+# void setStatusBarColor()
+# void onSaveInstanceState(Bundle)
++ void toggleSystemUI()
+- void hideSystemUI()
+- void setupSystemUI()
+- void showSystemUI()
+- void changeBackGroundColor()
+# void onDestroy()
+}
+class org.horaapps.leafpic.activities.PaletteActivity {
+- Toolbar toolbar
+- ImageView paletteImg
+- Uri uri
+- Palette palette
+- RecyclerView rvPalette
+- PaletteAdapter paletteAdapter
+- View.OnClickListener onClickListener
++ void onCreate(Bundle)
++ void updateUiElements()
++ void setPalette()
+}
+class org.horaapps.leafpic.activities.PaletteActivity.PaletteAdapter {
+- List<Palette.Swatch> swatches
++ PaletteActivity.PaletteAdapter.ViewHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(PaletteActivity.PaletteAdapter.ViewHolder,int)
++ int getItemCount()
+}
+class org.horaapps.leafpic.activities.PaletteActivity.PaletteAdapter.ViewHolder {
+~ TextView txtColor
+~ LinearLayout itemBackground
+}
+class org.horaapps.leafpic.activities.ResolverActivity {
+~ ViewPager mChoosePicsPager
+~ TextView mChooseNumText
+~ TextView mPrivacyInfoText
+~ RecyclerView mSharePanel
+- int mChooseNum
+- boolean mIsPrivacyOn
+- ArrayList<Media> mMedia
+- MediaPagerAdapter mViewPagerAdapter
+- AlbumsAdapter adapter
+- GridSpacingItemDecoration spacingDecoration
+- ActionsListener mActionsListener
+- RecyclerView.LayoutManager mGridLayoutManager
+- Album mAlbum
+- int mViewPagerPosition
+# void onCreate(Bundle)
+- void setUpViews()
+- void initSharePanel()
++ void onAttachedToWindow()
+- void loadAlbum(Intent)
+- void initChoosePics()
+- void initHeader()
+- String getChooseNumText()
+}
+class org.horaapps.leafpic.activities.SettingsActivity {
+- Toolbar toolbar
+~ SettingWithSwitchView optionMaxBrightness
+~ SettingWithSwitchView optionOrientation
+~ SettingWithSwitchView optionDelayFullRes
+~ SettingWithSwitchView optionAutoUpdateMedia
+~ SettingWithSwitchView optionIncludeVideo
+~ SettingWithSwitchView optionSwipeDirection
+~ SettingWithSwitchView optionShowFab
+~ SettingWithSwitchView optionStatusbar
+~ SettingWithSwitchView optionColoredNavbar
+~ SettingWithSwitchView optionSubScaling
+~ SettingWithSwitchView optionDisableAnimations
+- Unbinder unbinder
++ {static} void startActivity(Context)
++ void onCreate(Bundle)
+# void onDestroy()
++ void updateUiElements()
+# void setStatusBarColor()
++ void onChangeThemeClicked(View)
++ void onChangeCardViewStyleClicked(View)
++ void onSecurityClicked(View)
+- void askPassword()
++ void onChangePrimaryColorClicked(View)
++ void onChangeAccentColorClicked(View)
++ void onChangedCustomIconClicked(View)
++ void onWhiteListClicked(View)
++ void onCustomThirdActClicked(View)
++ void onMapProviderClicked(View)
++ void onChangeColumnsClicked(View)
+}
+class org.horaapps.leafpic.activities.AffixActivity {
+~ {static} int PICKED_ONE
+~ {static} int PICKED_TWO
+~ boolean onePicked
+~ boolean twoPicked
+~ Button choosePicture1
+~ ImageView compositeImageView
+~ Bitmap bmp1
+~ Canvas canvas
+~ Paint paint
+- ArrayList<String> images
+# void onCreate(Bundle)
++ void onClick(View)
+# void onActivityResult(int,int,Intent)
+- Bitmap loadBitmap(Uri)
+}
+class org.horaapps.leafpic.activities.SplashScreen {
+- String TAG
+- int EXTERNAL_STORAGE_PERMISSIONS
+- {static} int PICK_MEDIA_REQUEST
+~ {static} String CONTENT
+~ {static} int ALBUMS_PREFETCHED
+~ {static} int PHOTOS_PREFETCHED
+~ {static} int ALBUMS_BACKUP
+- boolean pickMode
++ {static} String ACTION_OPEN_ALBUM
++ void onCreate(Bundle)
+- void start()
+- void startLookingForMedia()
++ void onActivityResult(int,int,Intent)
++ void setNavBarColor()
+# void setStatusBarColor()
++ void onRequestPermissionsResult(int,String[],int[])
++ void updateUiElements()
+}
+class org.horaapps.leafpic.activities.MainActivity {
++ {static} String ARGS_PICK_MODE
+- {static} String SAVE_FRAGMENT_MODE
+~ FloatingActionButton fab
+~ DrawerLayout navigationDrawer
+~ NavigationDrawer navigationDrawerView
+~ Toolbar toolbar
+~ CoordinatorLayout mainLayout
+- AlbumsFragment albumsFragment
+- RvMediaFragment rvMediaFragment
+- TimelineFragment timelineFragment
+- boolean pickMode
+- Unbinder unbinder
+- int fragmentMode
++ void onCreate(Bundle)
+- void setContentFragment()
+- void initAlbumsFragment()
+# void onSaveInstanceState(Bundle)
+- void restoreState(Bundle)
+- void displayAlbums(boolean)
++ void displayMedia(Album)
++ void displayTimeline(Album)
+# void onDestroy()
++ void onMediaClick(Album,ArrayList<Media>,int)
++ void changedNothingToShow(boolean)
++ void changedEditMode(boolean,int,int,View.OnClickListener,String)
++ void onItemsSelected(int,int)
++ void onConfigurationChanged(Configuration)
++ void goBackToAlbums()
+- void unreferenceFragments()
+- void initUi()
+- void setupNavigationDrawer()
+- void setupFAB()
+- void closeDrawer()
+- void askPassword()
+# void onPostResume()
++ void updateUiElements()
+- void setAllScrollbarsColor()
+- void updateToolbar(String,IIcon,View.OnClickListener)
+- void showDefaultToolbar()
++ void enableNothingToSHowPlaceHolder(boolean)
++ void checkNothing(boolean)
+# void onStart()
++ boolean onOptionsItemSelected(MenuItem)
++ void onBackPressed()
++ void onAlbumClick(Album)
++ void onItemSelected(int)
+- void selectNavigationItem(int)
+- boolean inAlbumMode()
+- boolean inMediaMode()
+- boolean inTimelineMode()
+- void lockNavigationDrawer()
+- void unlockNavigationDrawer()
+- void setupUiForTimeline()
+}
+class org.horaapps.leafpic.activities.PlayerActivity {
++ {static} String DRM_SCHEME_UUID_EXTRA
++ {static} String DRM_LICENSE_URL
++ {static} String DRM_KEY_REQUEST_PROPERTIES
++ {static} String DRM_MULTI_SESSION
+- {static} DefaultBandwidthMeter BANDWIDTH_METER
+- {static} CookieManager DEFAULT_COOKIE_MANAGER
+- Handler mainHandler
+- CustomExoPlayerView simpleExoPlayerView
+- DataSource.Factory mediaDataSourceFactory
+- SimpleExoPlayer player
+- MappingTrackSelector trackSelector
+- TrackSelectionHelper trackSelectionHelper
+- TrackGroupArray lastSeenTrackGroupArray
+- int resumeWindow
+- long resumePosition
+- boolean shouldAutoPlay
+- boolean fullScreenMode
+- boolean inErrorState
+- int video
+~ Toolbar toolbar
+~ View rootView
++ void onCreate(Bundle)
++ void onNewIntent(Intent)
++ void onStart()
++ void onResume()
++ void onPause()
++ void onStop()
+- void initUi()
++ void onRequestPermissionsResult(int,String[],int[])
++ boolean dispatchKeyEvent(KeyEvent)
+- void initializePlayer()
+- DrmSessionManager<FrameworkMediaCrypto> buildDrmSessionManagerV18(UUID,String,String[],boolean)
+- MediaSource buildMediaSource(Uri,String)
+- void releasePlayer()
+- void updateResumePosition()
+- void clearResumePosition()
+- DataSource.Factory buildDataSourceFactory(boolean)
+~ HttpDataSource.Factory buildHttpDataSourceFactory(DefaultBandwidthMeter)
+- HttpDataSource.Factory buildHttpDataSourceFactory(boolean)
++ boolean onCreateOptionsMenu(Menu)
++ boolean onPrepareOptionsMenu(Menu)
++ boolean onOptionsItemSelected(MenuItem)
+- void showToast(int)
+- void showToast(String)
++ void updateUiElements()
++ void setNavBarColor()
+- void hideControls()
+- void showControls()
++ void onVisibilityChange(int)
+- void changeBackGroundColor()
+}
+class org.horaapps.leafpic.activities.PlayerActivity.PlayerEventListener {
++ void onPlayerStateChanged(boolean,int)
++ void onPositionDiscontinuity(int)
++ void onPlayerError(ExoPlaybackException)
++ void onTracksChanged(TrackGroupArray,TrackSelectionArray)
+}
+
+
+org.horaapps.leafpic.activities.base.BaseActivity <|-- org.horaapps.leafpic.activities.base.SharedMediaActivity
+org.horaapps.liz.ThemedActivity <|-- org.horaapps.leafpic.activities.base.BaseActivity
+org.horaapps.leafpic.activities.base.SharedMediaActivity <|-- org.horaapps.leafpic.activities.BlackWhiteListActivity
+org.horaapps.leafpic.activities.BlackWhiteListActivity +.. org.horaapps.leafpic.activities.BlackWhiteListActivity.ItemsAdapter
+org.horaapps.leafpic.activities.Adapter <|-- org.horaapps.leafpic.activities.BlackWhiteListActivity.ItemsAdapter
+org.horaapps.leafpic.activities.BlackWhiteListActivity.ItemsAdapter +.. org.horaapps.leafpic.activities.BlackWhiteListActivity.ItemsAdapter.ViewHolder
+org.horaapps.leafpic.activities.ViewHolder <|-- org.horaapps.leafpic.activities.BlackWhiteListActivity.ItemsAdapter.ViewHolder
+org.horaapps.liz.ThemedActivity <|-- org.horaapps.leafpic.activities.SecurityActivity
+org.horaapps.leafpic.activities.MediaTapListener <|.. org.horaapps.leafpic.activities.SingleMediaActivity
+org.horaapps.leafpic.activities.base.SharedMediaActivity <|-- org.horaapps.leafpic.activities.SingleMediaActivity
+org.horaapps.liz.ThemedActivity <|-- org.horaapps.leafpic.activities.PaletteActivity
+org.horaapps.leafpic.activities.PaletteActivity +.. org.horaapps.leafpic.activities.PaletteActivity.PaletteAdapter
+org.horaapps.leafpic.activities.Adapter <|-- org.horaapps.leafpic.activities.PaletteActivity.PaletteAdapter
+org.horaapps.leafpic.activities.PaletteActivity.PaletteAdapter +.. org.horaapps.leafpic.activities.PaletteActivity.PaletteAdapter.ViewHolder
+org.horaapps.leafpic.activities.ViewHolder <|-- org.horaapps.leafpic.activities.PaletteActivity.PaletteAdapter.ViewHolder
+android.support.v7.app.AppCompatActivity <|-- org.horaapps.leafpic.activities.ResolverActivity
+org.horaapps.liz.ThemedActivity <|-- org.horaapps.leafpic.activities.SettingsActivity
+android.view.View.OnClickListener <|.. org.horaapps.leafpic.activities.AffixActivity
+android.app.Activity <|-- org.horaapps.leafpic.activities.AffixActivity
+org.horaapps.leafpic.activities.base.SharedMediaActivity <|-- org.horaapps.leafpic.activities.SplashScreen
+org.horaapps.leafpic.interfaces.MediaClickListener <|.. org.horaapps.leafpic.activities.MainActivity
+org.horaapps.leafpic.activities.AlbumClickListener <|.. org.horaapps.leafpic.activities.MainActivity
+org.horaapps.leafpic.fragments.NothingToShowListener <|.. org.horaapps.leafpic.activities.MainActivity
+org.horaapps.leafpic.fragments.EditModeListener <|.. org.horaapps.leafpic.activities.MainActivity
+org.horaapps.leafpic.views.navigation_drawer.NavigationDrawer.ItemListener <|.. org.horaapps.leafpic.activities.MainActivity
+org.horaapps.leafpic.activities.base.SharedMediaActivity <|-- org.horaapps.leafpic.activities.MainActivity
+org.horaapps.leafpic.activities.VisibilityListener <|.. org.horaapps.leafpic.activities.PlayerActivity
+org.horaapps.liz.ThemedActivity <|-- org.horaapps.leafpic.activities.PlayerActivity
+org.horaapps.leafpic.activities.PlayerActivity +.. org.horaapps.leafpic.activities.PlayerActivity.PlayerEventListener
+org.horaapps.leafpic.activities.DefaultEventListener <|-- org.horaapps.leafpic.activities.PlayerActivity.PlayerEventListener
+@enduml

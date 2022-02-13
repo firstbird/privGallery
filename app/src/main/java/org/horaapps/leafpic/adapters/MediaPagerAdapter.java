@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.util.SparseArray;
 import android.view.ViewGroup;
+import android.widget.Checkable;
 
 import org.horaapps.leafpic.data.Media;
 import org.horaapps.leafpic.fragments.GifFragment;

@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,7 @@ public class ImageFragment extends BaseMediaFragment {
         Uri mediaUri = media.getUri();
         imageView.setOrientation(BitmapUtils.getOrientation(mediaUri, getContext()));
         imageView.setImage(ImageSource.uri(mediaUri));
+        // 会调用父类的listener
         setTapListener(imageView);
     }
 
@@ -60,5 +62,21 @@ public class ImageFragment extends BaseMediaFragment {
     public void rotatePicture(int rotationInDegrees) {
         if (rotationInDegrees == -90 && imageView.getOrientation() == 0) imageView.setOrientation(SubsamplingScaleImageView.ORIENTATION_270);
         else imageView.setOrientation(Math.abs(imageView.getOrientation() + rotationInDegrees) % 360);
+    }
+
+    // 自身的click listener
+    @Override
+    protected void setTapListener(@NonNull View view) {
+        Log.v("mzl", "resolverImageFragment, setTapListener, view: " + view);
+        view.setOnClickListener(v -> {
+            if (v.getAlpha() == 1) {
+                v.setPadding(15, 15, 15, 15);
+                v.setAlpha(0.2f);
+            } else {
+                v.setPadding(0, 0, 0, 0);
+                v.setAlpha(1f);
+            }
+            onTapped();
+        });
     }
 }

@@ -14,6 +14,8 @@ import android.text.method.LinkMovementMethod;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -91,6 +93,26 @@ public class AlertDialogsHelper {
         dialogTitle.setText(title);
         dialogMessage.setText(Message);
         dialogMessage.setTextColor(activity.getTextColor());
+        builder.setView(dialogLayout);
+        return builder.create();
+    }
+
+    public static AlertDialog getCheckboxDialog(ThemedActivity activity, String deleteLocationMessage, String deletePhotoMessage, CompoundButton.OnCheckedChangeListener listener1,
+                                                CompoundButton.OnCheckedChangeListener listener2){
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity,activity.getDialogStyle());
+        View dialogLayout = activity.getLayoutInflater().inflate(R.layout.dialog_delete_privacy, null);
+
+        TextView locationText = dialogLayout.findViewById(R.id.delete_location);
+        TextView photoText = dialogLayout.findViewById(R.id.delete_photo_info);
+        CheckBox deleteLocationBox = dialogLayout.findViewById(R.id.checkbox_location);
+        CheckBox deletePhotoInfo = dialogLayout.findViewById(R.id.checkbox_photo_info);
+        deleteLocationBox.setOnCheckedChangeListener(listener1);
+        deletePhotoInfo.setOnCheckedChangeListener(listener2);
+
+        locationText.setBackgroundColor(activity.getPrimaryColor());
+        locationText.setText(deleteLocationMessage);
+        photoText.setText(deletePhotoMessage);
+        photoText.setTextColor(activity.getTextColor());
         builder.setView(dialogLayout);
         return builder.create();
     }

@@ -55,7 +55,7 @@ public abstract class BaseMediaFragment extends BaseFragment {
         view.setOnClickListener(v -> onTapped());
     }
 
-    private void onTapped() {
+    protected void onTapped() {
         mediaTapListener.onViewTapped();
     }
 

@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
@@ -54,6 +55,7 @@ import org.horaapps.leafpic.util.preferences.Prefs;
 import org.horaapps.leafpic.views.navigation_drawer.NavigationDrawer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -212,14 +214,20 @@ public class MainActivity extends SharedMediaActivity implements
 
     @Override
     public void onMediaClick(Album album, ArrayList<Media> media, int position) {
-
         if (!pickMode) {
-            Intent intent = new Intent(getApplicationContext(), SingleMediaActivity.class);
+            Log.v("mzl", "on media click no pick mode, position: " + position);
+//            Intent intent = new Intent(getApplicationContext(), SingleMediaActivity.class);
+            Intent intent = new Intent(getApplicationContext(), ResolverActivity.class);
             intent.putExtra(SingleMediaActivity.EXTRA_ARGS_ALBUM, album);
             try {
                 intent.setAction(SingleMediaActivity.ACTION_OPEN_ALBUM);
                 intent.putExtra(SingleMediaActivity.EXTRA_ARGS_MEDIA, media);
                 intent.putExtra(SingleMediaActivity.EXTRA_ARGS_POSITION, position);
+                ArrayList<Integer> selected = new ArrayList<>();
+//                selected.add(0);
+//                selected.add(1);
+//                selected.add(2);
+                intent.putExtra(ResolverActivity.EXTRA_ARGS_SELECTED, selected);
                 startActivity(intent);
             } catch (Exception e) { // Putting too much data into the Bundle
                 // TODO: Find a better way to pass data between the activities - possibly a key to
@@ -230,7 +238,7 @@ public class MainActivity extends SharedMediaActivity implements
             }
 
         } else {
-
+            Log.v("mzl", "on media click, pick mode");
             Media m = media.get(position);
             Uri uri = LegacyCompatFileProvider.getUri(getApplicationContext(), m.getFile());
             Intent res = new Intent();
@@ -561,6 +569,7 @@ public class MainActivity extends SharedMediaActivity implements
 
     public void onItemSelected(@NavigationItem int navigationItemSelected) {
         closeDrawer();
+        Log.v("mzl", "onItemSelected, navigationItemSelected: " + navigationItemSelected);
         switch (navigationItemSelected) {
 
             case NAVIGATION_ITEM_ALL_ALBUMS:
@@ -595,8 +604,13 @@ public class MainActivity extends SharedMediaActivity implements
                 break;
 
             case NavigationDrawer.NAVIGATION_ITEM_AFFIX:
-                Intent i = new Intent(getBaseContext(), AffixActivity.class);
-                startActivity(i);
+//                Intent i = new Intent(getBaseContext(), AffixActivity.class);
+                Intent intent = new Intent(getBaseContext(), ResolverActivity.class);
+                intent.setAction(SingleMediaActivity.ACTION_OPEN_ALBUM);
+//                intent.putExtra(SingleMediaActivity.EXTRA_ARGS_MEDIA, media);
+//                intent.putExtra(SingleMediaActivity.EXTRA_ARGS_POSITION, position);
+                Log.v("mzl", "main activity nav affix");
+                startActivity(intent);
                 //   AffixActivity.startActivity(this);
                 break;
             case NAVIGATION_ITEM_SETTINGS:

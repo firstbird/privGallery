@@ -143,7 +143,6 @@ public class RvMediaFragment extends BaseMediaGridFragment {
                                 getNothingToShowListener().changedNothingToShow(getCount() == 0);
                             refresh.setRefreshing(false);
                         });
-
     }
 
     @Override

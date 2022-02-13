@@ -5,6 +5,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -317,8 +318,9 @@ public class AlbumsAdapter extends ThemedAdapter<AlbumsAdapter.ViewHolder> {
             if (selecting()) {
                 notifySelected(a.toggleSelected());
                 notifyItemChanged(position);
-            } else
+            } else {
                 actionsListener.onItemSelected(position);
+            }
         });
 
         holder.card.setOnLongClickListener(v -> {

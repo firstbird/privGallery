@@ -26,6 +26,9 @@
         android:largeHeap="true"
         android:theme="@style/Theme.AppCompat">
         <activity
+            android:name=".activities.ResolverActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.PlayerActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/video_player"
@@ -51,10 +54,10 @@
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.APP_GALLERY" />
             </intent-filter>
-
             <intent-filter>
                 <action android:name="android.intent.action.GET_CONTENT" />
 
@@ -66,6 +69,7 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.PICK" />
+
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data android:mimeType="image/*" />
@@ -195,13 +199,11 @@
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-
         <!--
              <meta-data
             android:name="org.horaapps.leafpic.CustomGlideModule"
             android:value="GlideModule" />
         -->
-
         <provider
             android:name=".util.LegacyCompatFileProvider"
             android:authorities="${applicationId}.provider"
